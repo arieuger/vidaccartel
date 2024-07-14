@@ -1,16 +1,18 @@
-const PIXEL_SIZE = 7;
+const PIXEL_SIZE = 5;
 
 const WIDTH = 600;
 const HEIGHT = WIDTH * 1.414;
 
 const X_OFFSET = -65;
-const Y_OFFSET = 120;
+const Y_OFFSET = 125;
 
 const VID_RATIO = 1;
 
-const ACCENT_FIRST_COLOR = "#59ffc5";
-const ACCENT_SECOND_COLOR = "#ff5959";
-const BACKGROUND_COLOR = "#212121";
+const MARGIN_SIZE = 20;
+
+const ACCENT_FIRST_COLOR = "#baead5";
+const ACCENT_SECOND_COLOR = "#38c59b";
+const BACKGROUND_COLOR = "#a3ead1";
 let accentColor1;
 let accentColor2;
 
@@ -50,15 +52,13 @@ function draw() {
             const bIntensity = (255 - vid.pixels[i * 4] + 2) / 255;
             const mIntensity = (rIntensity + gIntensity + bIntensity) / 3;
             
-            // if (mIntensity > 0.01) {
-            // if (rIntensity < 0.95 && gIntensity < 0.95 && bIntensity < 0.95) {
             if (mIntensity < 0.95) {
                 // Para usar a cor orixinal:
                 // fill(vid.pixels[i * 4], vid.pixels[i * 4 + 1] - 40, vid.pixels[i * 4 + 2]);
                 
                 // Usar degradado
                 // Obter ubicación en Y do canvas como porcentaxe
-                let normalizedY = (y + Y_OFFSET) / (HEIGHT - 90);
+                let normalizedY = (y + Y_OFFSET) / (HEIGHT - MARGIN_SIZE * 2);
                 let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY)
                 fill(colorToFill);
 
@@ -81,9 +81,31 @@ function draw() {
     // image(vid, X_OFFSET, Y_OFFSET);
 
     // Marco
-    noFill();
-    stroke(ACCENT_SECOND_COLOR);  
-    strokeWeight(45);   
-    rect(0, 0, WIDTH, HEIGHT);  
+    setFrame();
+
+}
+
+function setFrame() {
+    // noFill();
+    // stroke(ACCENT_SECOND_COLOR);  
+    // strokeWeight(MARGIN_SIZE);   
+    // rect(0, 0, WIDTH, HEIGHT);  
+
+    // Marco Gradient
+    for (let i = 0; i < HEIGHT; i += PIXEL_SIZE) {
+        let normalizedY = i / HEIGHT;
+        let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY)
+        fill(colorToFill);
+
+        if (i === 0) {
+            rect(0, i, WIDTH, MARGIN_SIZE);
+        } else {
+            rect(0, i, MARGIN_SIZE, MARGIN_SIZE);
+            rect(WIDTH - MARGIN_SIZE, i, MARGIN_SIZE, MARGIN_SIZE);
+        }
+    }
+
+    fill(accentColor2);
+    rect(0, HEIGHT - MARGIN_SIZE, WIDTH, MARGIN_SIZE)
 }
 
