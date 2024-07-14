@@ -34,18 +34,29 @@ function setup() {
     accentColor1 = color(ACCENT_FIRST_COLOR);
     accentColor2 = color(ACCENT_SECOND_COLOR);
 }
-
 function draw() {
     background(BACKGROUND_COLOR);
     
-    vid.loadPixels();
+    vid.loadPixels();    
+    setVideo();
     
+    // tint(255, 127);
+    // image(vid, X_OFFSET, Y_OFFSET);
+
+    setFrame();
+    setText();
+
+}
+
+
+function setVideo() {
+
     noStroke();
 
     for (let y = 0; y < canvas.height + Math.abs(Y_OFFSET); y += PIXEL_SIZE) {
         for (let x = 0; x < canvas.width + Math.abs(X_OFFSET); x += PIXEL_SIZE) {
             const i = y * vid.width + x;
-            
+
             // El valor en la posición i * 4     corresponde al componente rojo (R) del píxel.
             // El valor en la posición i * 4 + 1 corresponde al componente verde (G) del píxel.
             // El valor en la posición i * 4 + 2 corresponde al componente azul (B) del píxel.
@@ -55,41 +66,40 @@ function draw() {
             const gIntensity = (255 - vid.pixels[i * 4] + 1) / 255;
             const bIntensity = (255 - vid.pixels[i * 4] + 2) / 255;
             const mIntensity = (rIntensity + gIntensity + bIntensity) / 3;
-            
+
             if (mIntensity < 0.95) {
                 // Para usar a cor orixinal:
                 // fill(vid.pixels[i * 4], vid.pixels[i * 4 + 1] - 40, vid.pixels[i * 4 + 2]);
-                
+
                 // Usar degradado
                 // Obter ubicación en Y do canvas como porcentaxe
+                pattern(PTN.noise(0.1));
+                
                 let normalizedY = (y + Y_OFFSET) / (HEIGHT - MARGIN_SIZE * 2);
                 let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY)
-                fill(colorToFill);
+                // fill(colorToFill);
 
+                patternColors([colorToFill, "#256758"]);
                 // Para usar unha sola cor
+
+
                 // fill(accentColor1);
-                
-                
-                
                 // Para usar unha cor gradiente en intensidade:
                 // fill(red(accentColor1) - red(accentColor1) * mIntensity,
                 //      green(accentColor1) - green(accentColor1) * mIntensity,
+
                 //      blue(accentColor1) - blue(accentColor1) * mIntensity);
                 
-                rect(x + X_OFFSET, y + Y_OFFSET, PIXEL_SIZE, PIXEL_SIZE);
+                rectPattern(x + X_OFFSET, y + Y_OFFSET, PIXEL_SIZE, PIXEL_SIZE);
             }
         }
     }
+}
 
-    // tint(255, 127);
-    // image(vid, X_OFFSET, Y_OFFSET);
 
-    // Marco
-    setFrame();
+function setText() {
     textStyle(BOLD);
 
-    textStyle(BOLD);
-    
     fill("#f83963");
     textSize(135);
     textFont('Poppins');
@@ -100,19 +110,16 @@ function draw() {
     textSize(60);
     textFont('Poppins');
     text("ESQUERDA", 20, 80);
-    
+
     fill("#61d3ab");
     textSize(60);
     textFont('Poppins');
     text("ABAIXO", 340, 80);
 
-    // textStyle(NORMAL);
-
     fill("#ef6784");
     textSize(36);
     textFont('Poppins');
     text("Videoxogos e anticapitalismo", 20, 240);
-
 }
 
 function setFrame() {
