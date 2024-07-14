@@ -1,31 +1,32 @@
-const PIXEL_SIZE = 10;
+const PIXEL_SIZE = 7;
 
 const WIDTH = 600;
 const HEIGHT = WIDTH * 1.414;
 
-const X_OFFSET = -55;
-const Y_OFFSET = 168;
+const X_OFFSET = -65;
+const Y_OFFSET = 120;
 
 const VID_RATIO = 1;
 
-const ACCENT_COLOR = "#ff5959";
+const ACCENT_FIRST_COLOR = "#59ffc5";
+const ACCENT_SECOND_COLOR = "#ff5959";
 const BACKGROUND_COLOR = "#212121";
-let accentColor;
+let accentColor1;
+let accentColor2;
 
 // Ctrl + Shift + A -> Use JavaScript Library
 function setup() {
     canvas = createCanvas(WIDTH, HEIGHT);
     canvas.id("p5jsCanvas");
-    vid = createVideo("media/si2-c-sm-t.mp4");    // TODO: Reverso
-    // vid.size(HEIGHT * VID_RATIO, HEIGHT * VID_RATIO);
-    
-    vid.size(720 * VID_RATIO, 708 * VID_RATIO);
+    vid = createVideo("media/si2-c-sm-t.mp4");    
+    vid.size(720 * VID_RATIO, 766 * VID_RATIO);
 
     vid.volume(0);
     vid.loop();
     vid.hide();
 
-    accentColor = color(ACCENT_COLOR);
+    accentColor1 = color(ACCENT_FIRST_COLOR);
+    accentColor2 = color(ACCENT_SECOND_COLOR);
 }
 
 function draw() {
@@ -55,16 +56,21 @@ function draw() {
                 // Para usar a cor orixinal:
                 // fill(vid.pixels[i * 4], vid.pixels[i * 4 + 1] - 40, vid.pixels[i * 4 + 2]);
                 
+                // Usar degradado
+                // Obter ubicación en Y do canvas como porcentaxe
+                let normalizedY = (y + Y_OFFSET) / (HEIGHT - 90);
+                let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY)
+                fill(colorToFill);
+
                 // Para usar unha sola cor
-                fill(accentColor);
+                // fill(accentColor1);
                 
-                // usar degradado?
                 
                 
                 // Para usar unha cor gradiente en intensidade:
-                // fill(red(accentColor) - red(accentColor) * mIntensity,
-                //      green(accentColor) - green(accentColor) * mIntensity,
-                //      blue(accentColor) - blue(accentColor) * mIntensity);
+                // fill(red(accentColor1) - red(accentColor1) * mIntensity,
+                //      green(accentColor1) - green(accentColor1) * mIntensity,
+                //      blue(accentColor1) - blue(accentColor1) * mIntensity);
                 
                 rect(x + X_OFFSET, y + Y_OFFSET, PIXEL_SIZE, PIXEL_SIZE);
             }
@@ -76,7 +82,8 @@ function draw() {
 
     // Marco
     noFill();
-    stroke(ACCENT_COLOR);  
+    stroke(ACCENT_SECOND_COLOR);  
     strokeWeight(45);   
     rect(0, 0, WIDTH, HEIGHT);  
 }
+
