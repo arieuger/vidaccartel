@@ -1,22 +1,25 @@
-const PIXEL_SIZE = 30;
+const PIXEL_SIZE = 10;
 
 const WIDTH = 600;
 const HEIGHT = WIDTH * 1.414;
 
-const X_OFFSET = -300;
-const Y_OFFSET = -220;
+const X_OFFSET = -55;
+const Y_OFFSET = 168;
 
-const VID_RATIO = 1.5;
+const VID_RATIO = 1;
 
-const ACCENT_COLOR = "#ec1932";
+const ACCENT_COLOR = "#ff5959";
+const BACKGROUND_COLOR = "#212121";
 let accentColor;
 
 // Ctrl + Shift + A -> Use JavaScript Library
 function setup() {
     canvas = createCanvas(WIDTH, HEIGHT);
     canvas.id("p5jsCanvas");
-    vid = createVideo("media/fuego_144p.mp4");
-    vid.size(HEIGHT * VID_RATIO, HEIGHT * VID_RATIO);
+    vid = createVideo("media/si2-c-sm-t.mp4");    // TODO: Reverso
+    // vid.size(HEIGHT * VID_RATIO, HEIGHT * VID_RATIO);
+    
+    vid.size(720 * VID_RATIO, 708 * VID_RATIO);
 
     vid.volume(0);
     vid.loop();
@@ -26,7 +29,7 @@ function setup() {
 }
 
 function draw() {
-    background("#256758");
+    background(BACKGROUND_COLOR);
     
     vid.loadPixels();
     
@@ -46,15 +49,22 @@ function draw() {
             const bIntensity = (255 - vid.pixels[i * 4] + 2) / 255;
             const mIntensity = (rIntensity + gIntensity + bIntensity) / 3;
             
-            if (mIntensity < 0.5) {
-                
+            // if (mIntensity > 0.01) {
+            // if (rIntensity < 0.95 && gIntensity < 0.95 && bIntensity < 0.95) {
+            if (mIntensity < 0.95) {
                 // Para usar a cor orixinal:
                 // fill(vid.pixels[i * 4], vid.pixels[i * 4 + 1] - 40, vid.pixels[i * 4 + 2]);
                 
+                // Para usar unha sola cor
+                fill(accentColor);
+                
+                // usar degradado?
+                
+                
                 // Para usar unha cor gradiente en intensidade:
-                fill(red(accentColor) - red(accentColor) * mIntensity,
-                    green(accentColor) - green(accentColor) * mIntensity,
-                    blue(accentColor) - blue(accentColor) * mIntensity, );
+                // fill(red(accentColor) - red(accentColor) * mIntensity,
+                //      green(accentColor) - green(accentColor) * mIntensity,
+                //      blue(accentColor) - blue(accentColor) * mIntensity);
                 
                 rect(x + X_OFFSET, y + Y_OFFSET, PIXEL_SIZE, PIXEL_SIZE);
             }
