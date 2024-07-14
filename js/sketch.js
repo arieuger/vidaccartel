@@ -10,22 +10,26 @@ const VID_RATIO = 1;
 
 const MARGIN_SIZE = 20;
 
-const ACCENT_FIRST_COLOR = "#baead5";
+const ACCENT_FIRST_COLOR = "#bce5d4";
 const ACCENT_SECOND_COLOR = "#38c59b";
 const BACKGROUND_COLOR = "#a3ead1";
 let accentColor1;
 let accentColor2;
 
 // Ctrl + Shift + A -> Use JavaScript Library
-function setup() {
-    canvas = createCanvas(WIDTH, HEIGHT);
-    canvas.id("p5jsCanvas");
-    vid = createVideo("media/si2-c-sm-t.mp4");    
+
+function preload() {    
+    vid = createVideo("media/si2-c-sm-t.mp4");
     vid.size(720 * VID_RATIO, 766 * VID_RATIO);
 
     vid.volume(0);
     vid.loop();
     vid.hide();
+}
+
+function setup() {
+    canvas = createCanvas(WIDTH, HEIGHT);
+    canvas.id("p5jsCanvas");
 
     accentColor1 = color(ACCENT_FIRST_COLOR);
     accentColor2 = color(ACCENT_SECOND_COLOR);
@@ -82,6 +86,32 @@ function draw() {
 
     // Marco
     setFrame();
+    textStyle(BOLD);
+
+    textStyle(BOLD);
+    
+    fill("#f83963");
+    textSize(135);
+    textFont('Poppins');
+    text("ACCIÓN", 20, 190);
+
+    // textStyle(NORMAL);
+    fill("#23b68d");
+    textSize(60);
+    textFont('Poppins');
+    text("ESQUERDA", 20, 80);
+    
+    fill("#61d3ab");
+    textSize(60);
+    textFont('Poppins');
+    text("ABAIXO", 340, 80);
+
+    // textStyle(NORMAL);
+
+    fill("#ef6784");
+    textSize(36);
+    textFont('Poppins');
+    text("Videoxogos e anticapitalismo", 20, 240);
 
 }
 
@@ -107,5 +137,6 @@ function setFrame() {
 
     fill(accentColor2);
     rect(0, HEIGHT - MARGIN_SIZE, WIDTH, MARGIN_SIZE)
+
 }
 
