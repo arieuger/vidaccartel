@@ -38,7 +38,38 @@ function setup() {
     bgPattern = createGraphics(WIDTH, HEIGHT);
     
     bgPattern.loadPixels();
-    for (let x = 0; x < bgPattern.width; x++) {
+    
+    let incremento = 0.3;
+    let detalle = 5;
+    for (let x = 0; x < WIDTH; x++) {
+        for (let y = 0; y < HEIGHT; y++) {
+            // Posición normalizada
+            let posX = x / WIDTH;
+            let posY = y / HEIGHT;
+            
+            let perlNoise = 0;
+            let amplitude = 3;
+            let frecuencia = incremento;
+            for (let i = 0; i < detalle; i++) {
+                perlNoise += noise(posX * frecuencia, posY * frecuencia) * amplitude;
+                amplitude *= 0.5; // Reducir la amplitud para cada octava
+                frecuencia *= 2; // Duplicar la frecuencia para cada octava
+            }
+
+            let colorValue = map(perlNoise, 0, 1, 0, 50); // Mapa completo de 0 a 255 para el valor del color
+            // let colorValue = 75;
+            if (random(1) < 0.6) {
+                colorValue -= colorValue * 0.2;
+            }
+            let newColor = color(colorValue); // Crear un color gris basado en el valor de ruido
+            // newColor.setAlpha(50);
+
+            bgPattern.set(x, y, newColor);
+            
+        }
+    } 
+    
+    /*for (let x = 0; x < bgPattern.width; x++) {
         for (let y = 0; y < bgPattern.height; y++) {
             let noiseValue = random(0.85, 1);
             let baseColor = color(BACKGROUND_COLOR);
@@ -50,23 +81,28 @@ function setup() {
             
             bgPattern.set(x, y, newColor);
         }
-    }
+    }*/
     bgPattern.updatePixels();
     
 }
 function draw() {
     
-    // background(BACKGROUND_COLOR);
+    background(BACKGROUND_COLOR);
+    blendMode(DIFFERENCE);
     image(bgPattern, 0, 0);
-    
+
+    blendMode(BLEND);
     vid.loadPixels();    
+    
+    blendMode(SOFT_LIGHT);
     setVideo();
     
     // tint(255, 127);
     // image(vid, X_OFFSET, Y_OFFSET);
+    blendMode(BLEND);
 
-    setFrame();
     setText();
+    setFrame();
     
 
 }
