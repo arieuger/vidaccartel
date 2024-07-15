@@ -1,7 +1,7 @@
 const PIXEL_SIZE = 5;
 
 const WIDTH = 600;
-const HEIGHT = WIDTH * 1.414;
+const HEIGHT = Math.trunc(WIDTH * 1.414);
 
 const X_OFFSET = -65;
 const Y_OFFSET = 125;
@@ -16,6 +16,7 @@ const BACKGROUND_COLOR = "#a3ead1";
 let accentColor1;
 let accentColor2;
 
+let bgPattern;
 // Ctrl + Shift + A -> Use JavaScript Library
 
 function preload() {    
@@ -33,9 +34,30 @@ function setup() {
 
     accentColor1 = color(ACCENT_FIRST_COLOR);
     accentColor2 = color(ACCENT_SECOND_COLOR);
+    
+    bgPattern = createGraphics(WIDTH, HEIGHT);
+    
+    bgPattern.loadPixels();
+    for (let x = 0; x < bgPattern.width; x++) {
+        for (let y = 0; y < bgPattern.height; y++) {
+            let noiseValue = random(0.85, 1);
+            let baseColor = color(BACKGROUND_COLOR);
+            let newColor = color(
+                red(baseColor) * noiseValue,
+                green(baseColor) * noiseValue,
+                blue(baseColor) * noiseValue
+            )
+            
+            bgPattern.set(x, y, newColor);
+        }
+    }
+    bgPattern.updatePixels();
+    
 }
 function draw() {
-    background(BACKGROUND_COLOR);
+    
+    // background(BACKGROUND_COLOR);
+    image(bgPattern, 0, 0);
     
     vid.loadPixels();    
     setVideo();
@@ -45,6 +67,7 @@ function draw() {
 
     setFrame();
     setText();
+    
 
 }
 
@@ -72,14 +95,11 @@ function setVideo() {
                 // fill(vid.pixels[i * 4], vid.pixels[i * 4 + 1] - 40, vid.pixels[i * 4 + 2]);
 
                 // Usar degradado
-                // Obter ubicación en Y do canvas como porcentaxe
-                pattern(PTN.noise(0.1));
-                
+                // Obter ubicación en Y do canvas como porcentaxe                
                 let normalizedY = (y + Y_OFFSET) / (HEIGHT - MARGIN_SIZE * 2);
-                let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY)
-                // fill(colorToFill);
+                let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY);
 
-                patternColors([colorToFill, "#256758"]);
+                fill(colorToFill);
                 // Para usar unha sola cor
 
 
@@ -90,7 +110,7 @@ function setVideo() {
 
                 //      blue(accentColor1) - blue(accentColor1) * mIntensity);
                 
-                rectPattern(x + X_OFFSET, y + Y_OFFSET, PIXEL_SIZE, PIXEL_SIZE);
+                rect(x + X_OFFSET, y + Y_OFFSET, PIXEL_SIZE, PIXEL_SIZE);
             }
         }
     }
