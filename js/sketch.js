@@ -10,8 +10,8 @@ const VID_RATIO = 1;
 
 const MARGIN_SIZE = 20;
 
-const ACCENT_FIRST_COLOR = "#bce5d4";
-const ACCENT_SECOND_COLOR = "#38c59b";
+const ACCENT_FIRST_COLOR = "#25673f";
+const ACCENT_SECOND_COLOR = "#ff5959";
 const BACKGROUND_COLOR = "#a3ead1";
 let accentColor1;
 let accentColor2;
@@ -69,39 +69,28 @@ function setup() {
         }
     } 
     
-    /*for (let x = 0; x < bgPattern.width; x++) {
-        for (let y = 0; y < bgPattern.height; y++) {
-            let noiseValue = random(0.85, 1);
-            let baseColor = color(BACKGROUND_COLOR);
-            let newColor = color(
-                red(baseColor) * noiseValue,
-                green(baseColor) * noiseValue,
-                blue(baseColor) * noiseValue
-            )
-            
-            bgPattern.set(x, y, newColor);
-        }
-    }*/
     bgPattern.updatePixels();
     
 }
 function draw() {
-    
+
+    blendMode(BLEND);
     background(BACKGROUND_COLOR);
     blendMode(DIFFERENCE);
     image(bgPattern, 0, 0);
 
-    blendMode(BLEND);
-    vid.loadPixels();    
-    
-    blendMode(SOFT_LIGHT);
+    // blendMode(BLEND);
+    vid.loadPixels();
+
     setVideo();
     
     // tint(255, 127);
     // image(vid, X_OFFSET, Y_OFFSET);
     blendMode(BLEND);
 
+    blendMode(MULTIPLY);
     setText();
+    blendMode(BLEND);
     setFrame();
     
 
@@ -135,8 +124,8 @@ function setVideo() {
                 let normalizedY = (y + Y_OFFSET) / (HEIGHT - MARGIN_SIZE * 2);
                 let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY);
 
-                fill(colorToFill);
                 // Para usar unha sola cor
+                fill(colorToFill);
 
 
                 // fill(accentColor1);
