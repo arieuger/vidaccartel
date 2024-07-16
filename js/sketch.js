@@ -43,7 +43,6 @@ function setup() {
     accentColor1 = color(ACCENT_FIRST_COLOR);
     accentColor2 = color(ACCENT_SECOND_COLOR);
     setBackgroundTexture();
-
 }
 
 function draw() {
@@ -189,6 +188,10 @@ function setText() {
     fill(intensifyColor(accentColor2, 50));
     textSize(36);
     text("Videoxogos e anticapitalismo", START_X_TEXT, START_Y_TEXT + 150);
+
+    fill(intensifyColor(accentColor1, 50));
+    textSize(30);
+    text("27 de Xullo ⚡ A Revolteira", START_X_TEXT + 83, START_Y_TEXT + 207);
 
     // textStyle(NORMAL);
 }
