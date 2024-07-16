@@ -12,13 +12,14 @@ const MARGIN_SIZE = 20;
 
 const ACCENT_FIRST_COLOR = "#25673f";
 const ACCENT_SECOND_COLOR = "#c05858";
-const BACKGROUND_COLOR = "#f8c7b3";
+const BACKGROUND_COLORS = ["#b3f8de", "#f8c7b3", "#f8b3bb"];
+// #f8c7b3
+let backgroundColor;
 let accentColor1;
 let accentColor2;
 
 const START_X_TEXT = 23;
 const START_Y_TEXT = 70;
-
 
 let bgPattern;
 let minColorValue = 255; // Inicialmente, el valor más alto posible
@@ -39,6 +40,7 @@ function setup() {
     canvas = createCanvas(WIDTH, HEIGHT);
     canvas.id("p5jsCanvas");
 
+    backgroundColor = random(BACKGROUND_COLORS);
     accentColor1 = color(ACCENT_FIRST_COLOR);
     accentColor2 = color(ACCENT_SECOND_COLOR);
     setBackgroundTexture();
@@ -48,7 +50,7 @@ function setup() {
 function draw() {
 
     blendMode(BLEND);
-    background(BACKGROUND_COLOR);
+    background(backgroundColor);
     blendMode(DARKEST);
     image(bgPattern, 0, 0);
 
@@ -169,28 +171,29 @@ function setVideo() {
 
 
 function setText() {
+
     textStyle(BOLD);
 
     fill("#f83963");
     textSize(135);
     textFont('Poppins');
     text("ACCIÓN", START_X_TEXT, START_Y_TEXT + 110);
-    
+
     fill("#61d3ab");
     textSize(58);
     textFont('Poppins');
     text("ABAIXO", START_X_TEXT + 5, START_Y_TEXT);
-    
+
     fill("#23b68d");
     textSize(58);
     textFont('Poppins');
     text("ESQUERDA", 267, START_Y_TEXT);
-
     fill("#ef6784");
+
     textSize(36);
     textFont('Poppins');
     text("Videoxogos e anticapitalismo", START_X_TEXT, START_Y_TEXT + 150);
-    
+
     // textStyle(NORMAL);
 }
 
