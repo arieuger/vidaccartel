@@ -16,13 +16,12 @@ const BACKGROUND_COLOR = "#f8c7b3";
 let accentColor1;
 let accentColor2;
 
+
 let bgPattern;
-
-
 let minColorValue = 255; // Inicialmente, el valor más alto posible
 let maxColorValue = 155; // Inicialmente, el valor más bajo posible
-
 let colorValues = [];
+
 // Ctrl + Shift + A -> Use JavaScript Library
 
 function preload() {    
@@ -85,9 +84,9 @@ function setup() {
             index++;
 
             if (random(1) < 0.6) {
-                if (colorValue >= maxMapped - 33)
+                if (colorValue >= maxMapped - 15)
                     colorValue -= colorValue * 0.2;
-                else if (colorValue <= minMapped + 33)
+                else if (colorValue <= minMapped + 15)
                     colorValue += colorValue * 0.2;
                 else
                     colorValue += colorValue * random(-0.2, 0.2);
