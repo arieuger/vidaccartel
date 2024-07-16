@@ -56,8 +56,8 @@ function setup() {
                 frecuencia *= 2; // Duplicar la frecuencia para cada octava
             }
 
-            let colorValue = map(perlNoise, 0, 1, 0, 50); // Mapa completo de 0 a 255 para el valor del color
-            // let colorValue = 75;
+            let colorValue = map(perlNoise, 0, 1, 50, 100); // Mapa completo de 0 a 255 para el valor del color
+            // let colorValue = 255;
             if (random(1) < 0.6) {
                 colorValue -= colorValue * 0.2;
             }
@@ -76,10 +76,10 @@ function draw() {
 
     blendMode(BLEND);
     background(BACKGROUND_COLOR);
-    blendMode(DIFFERENCE);
+    blendMode(DARKEST);
     image(bgPattern, 0, 0);
 
-    // blendMode(BLEND);
+    blendMode(DIFFERENCE);
     vid.loadPixels();
 
     setVideo();
@@ -90,7 +90,9 @@ function draw() {
 
     blendMode(MULTIPLY);
     setText();
-    blendMode(BLEND);
+    // blendMode(LIGHTEST);
+
+    blendMode(SOFT_LIGHT);
     setFrame();
     
 
