@@ -12,7 +12,7 @@ const MARGIN_SIZE = 20;
 
 const ACCENT_FIRST_COLOR = "#25673f";
 const ACCENT_SECOND_COLOR = "#ff5959";
-const BACKGROUND_COLOR = "#a3ead1";
+const BACKGROUND_COLOR = "#f8c7b3";
 let accentColor1;
 let accentColor2;
 
@@ -56,10 +56,15 @@ function setup() {
                 frecuencia *= 2; // Duplicar la frecuencia para cada octava
             }
 
-            let colorValue = map(perlNoise, 0, 1, 50, 100); // Mapa completo de 0 a 255 para el valor del color
+            let colorValue = map(perlNoise, 0, detalle, 155, 255);
             // let colorValue = 255;
             if (random(1) < 0.6) {
-                colorValue -= colorValue * 0.2;
+                if (colorValue >= 255 - 33)
+                    colorValue -= colorValue * 0.2;
+                else if (colorValue <= 255 - 66)
+                    colorValue += colorValue * 0.2;
+                else
+                    colorValue += colorValue * random(-0.2, 0.2);
             }
             let newColor = color(colorValue); // Crear un color gris basado en el valor de ruido
             // newColor.setAlpha(50);
