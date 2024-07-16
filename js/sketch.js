@@ -10,10 +10,9 @@ const VID_RATIO = 1;
 
 const MARGIN_SIZE = 20;
 
-const ACCENT_FIRST_COLOR = "#25673f";
+const ACCENT_FIRST_COLOR = "#2f7e6c";
 const ACCENT_SECOND_COLOR = "#c05858";
-const BACKGROUND_COLORS = ["#b3f8de", "#f8c7b3", "#f8b3bb"];
-// #f8c7b3
+const BACKGROUND_COLORS = [ "#f8c7b3", "#ffbdbd"];
 let backgroundColor;
 let accentColor1;
 let accentColor2;
@@ -172,26 +171,23 @@ function setVideo() {
 
 function setText() {
 
+    textFont('Poppins');
     textStyle(BOLD);
 
-    fill("#f83963");
+    fill(intensifyColor(accentColor2, 20));
     textSize(135);
-    textFont('Poppins');
     text("ACCIÓN", START_X_TEXT, START_Y_TEXT + 110);
 
-    fill("#61d3ab");
+    fill(intensifyColor(accentColor1, 60));
     textSize(58);
-    textFont('Poppins');
     text("ABAIXO", START_X_TEXT + 5, START_Y_TEXT);
 
-    fill("#23b68d");
+    fill(intensifyColor(accentColor1, 20));
     textSize(58);
-    textFont('Poppins');
     text("ESQUERDA", 267, START_Y_TEXT);
-    fill("#ef6784");
 
+    fill(intensifyColor(accentColor2, 50));
     textSize(36);
-    textFont('Poppins');
     text("Videoxogos e anticapitalismo", START_X_TEXT, START_Y_TEXT + 150);
 
     // textStyle(NORMAL);
@@ -218,3 +214,22 @@ function setFrame() {
 
 }
 
+function intensifyColor(color, intensity) {
+    let r = red(color) + intensity;
+    let g = green(color) + intensity;
+    let b = blue(color) + intensity;
+
+    // Asegurar que los valores no excedan 255
+    r = min(r, 255);
+    g = min(g, 255);
+    b = min(b, 255);
+    
+    // Convertir los componentes RGB a hexadecimal
+    let hexR = r.toString(16).padStart(2, '0'); // Convertir a hexadecimal y asegurar 2 dígitos
+    let hexG = g.toString(16).padStart(2, '0');
+    let hexB = b.toString(16).padStart(2, '0');
+
+
+    // Devolver el color en formato hexadecimal como string
+    return "#" + hexR + hexG + hexB;
+}
