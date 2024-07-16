@@ -17,6 +17,12 @@ let accentColor1;
 let accentColor2;
 
 let bgPattern;
+
+
+let minColorValue = 255; // Inicialmente, el valor más alto posible
+let maxColorValue = 155; // Inicialmente, el valor más bajo posible
+
+let colorValues = [];
 // Ctrl + Shift + A -> Use JavaScript Library
 
 function preload() {    
@@ -57,21 +63,40 @@ function setup() {
             }
 
             let colorValue = map(perlNoise, 0, detalle, 155, 255);
+            colorValues.push(colorValue);
+
+            if (colorValue < minColorValue) minColorValue = colorValue;
+            if (colorValue > maxColorValue) maxColorValue = colorValue;
+            
+        }
+    }
+
+    let minMapped = 155;
+    let maxMapped = 255;
+
+    for (let i = 0; i < colorValues.length; i++) {
+        colorValues[i] = map(colorValues[i], minColorValue, maxColorValue, minMapped, maxMapped);
+    }
+
+    let index = 0;
+    for (let x = 0; x < WIDTH; x++) {
+        for (let y = 0; y < HEIGHT; y++) {
+            let colorValue = colorValues[index];
+            index++;
 
             if (random(1) < 0.6) {
-                if (colorValue >= 255 - 33)
+                if (colorValue >= maxMapped - 33)
                     colorValue -= colorValue * 0.2;
-                else if (colorValue <= 255 - 66)
+                else if (colorValue <= minMapped + 33)
                     colorValue += colorValue * 0.2;
                 else
                     colorValue += colorValue * random(-0.2, 0.2);
             }
-            let newColor = color(colorValue);
 
+            let newColor = color(colorValue);
             bgPattern.set(x, y, newColor);
-            
         }
-    } 
+    }
     
     bgPattern.updatePixels();
     
