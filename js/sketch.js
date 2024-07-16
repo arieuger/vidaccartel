@@ -57,7 +57,7 @@ function setup() {
             }
 
             let colorValue = map(perlNoise, 0, detalle, 155, 255);
-            // let colorValue = 255;
+
             if (random(1) < 0.6) {
                 if (colorValue >= 255 - 33)
                     colorValue -= colorValue * 0.2;
@@ -66,8 +66,7 @@ function setup() {
                 else
                     colorValue += colorValue * random(-0.2, 0.2);
             }
-            let newColor = color(colorValue); // Crear un color gris basado en el valor de ruido
-            // newColor.setAlpha(50);
+            let newColor = color(colorValue);
 
             bgPattern.set(x, y, newColor);
             
@@ -108,8 +107,8 @@ function setVideo() {
 
     noStroke();
 
-    for (let y = 0; y < canvas.height + Math.abs(Y_OFFSET); y += PIXEL_SIZE) {
-        for (let x = 0; x < canvas.width + Math.abs(X_OFFSET); x += PIXEL_SIZE) {
+    for (let y = MARGIN_SIZE; y < canvas.height + Math.abs(Y_OFFSET) - MARGIN_SIZE; y += PIXEL_SIZE) {
+        for (let x = MARGIN_SIZE; x < canvas.width + Math.abs(X_OFFSET) - MARGIN_SIZE; x += PIXEL_SIZE) {
             const i = y * vid.width + x;
 
             // El valor en la posición i * 4     corresponde al componente rojo (R) del píxel.
