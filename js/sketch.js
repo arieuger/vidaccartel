@@ -11,10 +11,13 @@ const VID_RATIO = 1;
 const MARGIN_SIZE = 20;
 
 const ACCENT_FIRST_COLOR = "#25673f";
-const ACCENT_SECOND_COLOR = "#ff5959";
+const ACCENT_SECOND_COLOR = "#c05858";
 const BACKGROUND_COLOR = "#f8c7b3";
 let accentColor1;
 let accentColor2;
+
+const START_X_TEXT = 23;
+const START_Y_TEXT = 70;
 
 
 let bgPattern;
@@ -32,33 +35,54 @@ function preload() {
     vid.loop();
     vid.hide();
 }
-
 function setup() {
     canvas = createCanvas(WIDTH, HEIGHT);
     canvas.id("p5jsCanvas");
 
     accentColor1 = color(ACCENT_FIRST_COLOR);
     accentColor2 = color(ACCENT_SECOND_COLOR);
+    setBackgroundTexture();
+
+}
+
+function draw() {
+
+    blendMode(BLEND);
+    background(BACKGROUND_COLOR);
+    blendMode(DARKEST);
+    image(bgPattern, 0, 0);
+
+    blendMode(DIFFERENCE);
+    vid.loadPixels();
+    setVideo();
     
+    blendMode(MULTIPLY);
+    setText();
+    
+    blendMode(SOFT_LIGHT);
+    setFrame();
+    
+}
+
+function setBackgroundTexture() {
     bgPattern = createGraphics(WIDTH, HEIGHT);
-    
+
     bgPattern.loadPixels();
-    
+
     let incremento = 0.3;
     let detalle = 5;
     for (let x = 0; x < WIDTH; x++) {
         for (let y = 0; y < HEIGHT; y++) {
-            // Posición normalizada
             let posX = x / WIDTH;
             let posY = y / HEIGHT;
-            
+
             let perlNoise = 0;
             let amplitude = 3;
             let frecuencia = incremento;
             for (let i = 0; i < detalle; i++) {
                 perlNoise += noise(posX * frecuencia, posY * frecuencia) * amplitude;
-                amplitude *= 0.5; // Reducir la amplitud para cada octava
-                frecuencia *= 2; // Duplicar la frecuencia para cada octava
+                amplitude *= 0.5; 
+                frecuencia *= 2; 
             }
 
             let colorValue = map(perlNoise, 0, detalle, 155, 255);
@@ -66,7 +90,7 @@ function setup() {
 
             if (colorValue < minColorValue) minColorValue = colorValue;
             if (colorValue > maxColorValue) maxColorValue = colorValue;
-            
+
         }
     }
 
@@ -96,36 +120,9 @@ function setup() {
             bgPattern.set(x, y, newColor);
         }
     }
-    
+
     bgPattern.updatePixels();
-    
 }
-function draw() {
-
-    blendMode(BLEND);
-    background(BACKGROUND_COLOR);
-    blendMode(DARKEST);
-    image(bgPattern, 0, 0);
-
-    blendMode(DIFFERENCE);
-    vid.loadPixels();
-
-    setVideo();
-    
-    // tint(255, 127);
-    // image(vid, X_OFFSET, Y_OFFSET);
-    blendMode(BLEND);
-
-    blendMode(MULTIPLY);
-    setText();
-    // blendMode(LIGHTEST);
-
-    blendMode(SOFT_LIGHT);
-    setFrame();
-    
-
-}
-
 
 function setVideo() {
 
@@ -153,12 +150,11 @@ function setVideo() {
                 // Obter ubicación en Y do canvas como porcentaxe                
                 let normalizedY = (y + Y_OFFSET) / (HEIGHT - MARGIN_SIZE * 2);
                 let colorToFill = lerpColor(accentColor1, accentColor2, normalizedY);
-
-                // Para usar unha sola cor
                 fill(colorToFill);
-
-
+                
+                // Para usar unha sola cor
                 // fill(accentColor1);
+                
                 // Para usar unha cor gradiente en intensidade:
                 // fill(red(accentColor1) - red(accentColor1) * mIntensity,
                 //      green(accentColor1) - green(accentColor1) * mIntensity,
@@ -178,30 +174,27 @@ function setText() {
     fill("#f83963");
     textSize(135);
     textFont('Poppins');
-    text("ACCIÓN", 20, 190);
-
-    // textStyle(NORMAL);
-    fill("#23b68d");
-    textSize(60);
-    textFont('Poppins');
-    text("ESQUERDA", 20, 80);
-
+    text("ACCIÓN", START_X_TEXT, START_Y_TEXT + 110);
+    
     fill("#61d3ab");
-    textSize(60);
+    textSize(58);
     textFont('Poppins');
-    text("ABAIXO", 340, 80);
+    text("ABAIXO", START_X_TEXT + 5, START_Y_TEXT);
+    
+    fill("#23b68d");
+    textSize(58);
+    textFont('Poppins');
+    text("ESQUERDA", 267, START_Y_TEXT);
 
     fill("#ef6784");
     textSize(36);
     textFont('Poppins');
-    text("Videoxogos e anticapitalismo", 20, 240);
+    text("Videoxogos e anticapitalismo", START_X_TEXT, START_Y_TEXT + 150);
+    
+    // textStyle(NORMAL);
 }
 
 function setFrame() {
-    // noFill();
-    // stroke(ACCENT_SECOND_COLOR);  
-    // strokeWeight(MARGIN_SIZE);   
-    // rect(0, 0, WIDTH, HEIGHT);  
 
     // Marco Gradient
     for (let i = 0; i < HEIGHT; i += PIXEL_SIZE) {
