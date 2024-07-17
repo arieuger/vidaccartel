@@ -179,11 +179,11 @@ function setText() {
 
     fill(intensifyColor(accentColor1, 60));
     textSize(58);
-    text("ABAIXO", START_X_TEXT + 5, START_Y_TEXT);
+    text("ESQUERDA", START_X_TEXT + 5, START_Y_TEXT);
 
     fill(intensifyColor(accentColor1, 20));
     textSize(58);
-    text("ESQUERDA", 267, START_Y_TEXT);
+    text("ABAIXO", START_X_TEXT + 324, START_Y_TEXT);
 
     fill(intensifyColor(accentColor2, 50));
     textSize(36);
